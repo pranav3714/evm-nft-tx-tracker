@@ -1,0 +1,30 @@
+{
+  "name": "node-evm-tx-tracker",
+  "version": "1.2.0",
+  "description": "A basic starter for an express.js API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint --fix src",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "BlackSilver <pranavs76270@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ethereum-multicall": "^2.21.0",
+    "ethers": "5",
+    "mongoose": "^8.1.1",
+    "redis": "^4.6.12"
+  },
+  "devDependencies": {
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "husky": "^9.0.10",
+    "nodemon": "^3.0.3",
+    "supertest": "^6.3.3"
+  }
+}
