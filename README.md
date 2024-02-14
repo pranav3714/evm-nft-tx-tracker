@@ -35,11 +35,12 @@ In order to setup the project on locally continue to the sections below.
 
 1. Get 2 rpc urls for any evm compatible chain you may want to setup tracking for.
 2. Open the `.env.sample` file and add the values then rename it to `.env`.
-3. Install dependancy packages
+3. Spin up a redis server on port 6379.
+4. Install dependancy packages
    ```sh
    yarn
    ```
-4. Spin up a local server by running
+5. Spin up a local server by running
    ```sh
    yarn dev
    ```

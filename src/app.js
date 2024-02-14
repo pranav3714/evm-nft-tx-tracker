@@ -1,11 +1,11 @@
-const { Interface } = require('ethers/lib/utils');
-const { getMumbaiProvider } = require('../utils/providers');
-const { contractRecorder } = require('./newBlockUtils/nftContractListener');
-const { newBlockHandler } = require('./newBlockUtils');
-const getRedisClient = require('../utils/redis');
-const { validTopics, NftEvent } = require('../models/nft-events.model');
-const erc1155 = require('../abis/erc1155');
 const erc721 = require('../abis/erc721');
+const erc1155 = require('../abis/erc1155');
+const getRedisClient = require('../utils/redis');
+const { Interface } = require('ethers/lib/utils');
+const { newBlockHandler } = require('./newBlockUtils');
+const { getMumbaiProvider } = require('../utils/providers');
+const { validTopics, NftEvent } = require('../models/nft-events.model');
+const { contractRecorder } = require('./newBlockUtils/nftContractListener');
 
 const mumbaiProvider = getMumbaiProvider();
 const mumbaiProvider2 = getMumbaiProvider(2);
