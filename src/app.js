@@ -1,7 +1,7 @@
+const { Interface } = require('ethers/lib/utils');
 const erc721 = require('../abis/erc721');
 const erc1155 = require('../abis/erc1155');
 const getRedisClient = require('../utils/redis');
-const { Interface } = require('ethers/lib/utils');
 const { newBlockHandler } = require('./newBlockUtils');
 const { getMumbaiProvider } = require('../utils/providers');
 const { validTopics, NftEvent } = require('../models/nft-events.model');
