@@ -1,17 +1,18 @@
-const { Multicall } = require("ethereum-multicall");
-const { BigNumber } = require("ethers");
-const erc721 = require("../../abis/erc721");
-const erc1155 = require("../../abis/erc1155");
-const supportsInterface = require("../../abis/supportsInterface");
+const { Multicall } = require('ethereum-multicall');
+const erc721 = require('../../abis/erc721');
+const erc1155 = require('../../abis/erc1155');
+const supportsInterface = require('../../abis/supportsInterface');
 const {
   NftContract,
   contractTypes,
-} = require("../../models/nft-contract.model");
-const getRedisClient = require("../../utils/redis");
-const common = require("../../abis/common");
+} = require('../../models/nft-contract.model');
+const getRedisClient = require('../../utils/redis');
+const common = require('../../abis/common');
 
 const checkContractType = async (cTxn, provider) => {
-  const { from, hash, blockNumber, chainId } = cTxn;
+  const {
+    from, hash, blockNumber, chainId,
+  } = cTxn;
   const contractAddress = cTxn.creates;
   try {
     const multicall = new Multicall({
@@ -19,28 +20,28 @@ const checkContractType = async (cTxn, provider) => {
       tryAggregate: true,
     });
     const results = await multicall.call({
-      reference: "contract",
+      reference: 'contract',
       contractAddress,
       abi: [...supportsInterface, ...erc721, ...erc1155, ...common],
       calls: [
         {
-          reference: "supportsInterfaceERC1155",
-          methodName: "supportsInterface",
-          methodParameters: ["0xd9b67a26"],
+          reference: 'supportsInterfaceERC1155',
+          methodName: 'supportsInterface',
+          methodParameters: ['0xd9b67a26'],
         },
         {
-          reference: "supportsInterfaceERC721",
-          methodName: "supportsInterface",
-          methodParameters: ["0x80ac58cd"],
+          reference: 'supportsInterfaceERC721',
+          methodName: 'supportsInterface',
+          methodParameters: ['0x80ac58cd'],
         },
         {
-          reference: "name",
-          methodName: "name",
+          reference: 'name',
+          methodName: 'name',
           methodParameters: [],
         },
         {
-          reference: "symbol",
-          methodName: "symbol",
+          reference: 'symbol',
+          methodName: 'symbol',
           methodParameters: [],
         },
         // {
@@ -49,8 +50,8 @@ const checkContractType = async (cTxn, provider) => {
         //   methodParameters: [],
         // },
         {
-          reference: "baseURI",
-          methodName: "baseURI",
+          reference: 'baseURI',
+          methodName: 'baseURI',
           methodParameters: [],
         },
         // {
@@ -65,15 +66,15 @@ const checkContractType = async (cTxn, provider) => {
       contractAddress,
       isERC1155:
         returnContext.find(
-          ({ reference }) => reference === "supportsInterfaceERC1155"
+          ({ reference }) => reference === 'supportsInterfaceERC1155',
         ).returnValues[0] || false,
       isERC721:
         returnContext.find(
-          ({ reference }) => reference === "supportsInterfaceERC721"
+          ({ reference }) => reference === 'supportsInterfaceERC721',
         ).returnValues[0] || false,
-      name: returnContext.find(({ reference }) => reference === "name")
+      name: returnContext.find(({ reference }) => reference === 'name')
         .returnValues[0],
-      symbol: returnContext.find(({ reference }) => reference === "symbol")
+      symbol: returnContext.find(({ reference }) => reference === 'symbol')
         .returnValues[0],
       // supply: returnContext.find(({ reference }) => reference === 'totalSupply')
       //   .returnValues[0]?.hex
@@ -82,7 +83,7 @@ const checkContractType = async (cTxn, provider) => {
       //       .returnValues[0]?.hex,
       //   ).toString()
       //   : undefined,
-      baseURI: returnContext.find(({ reference }) => reference === "baseURI")
+      baseURI: returnContext.find(({ reference }) => reference === 'baseURI')
         .returnValues[0],
       // contractURI: returnContext.find(
       //   ({ reference }) => reference === 'contractURI',
@@ -108,7 +109,7 @@ const checkContractType = async (cTxn, provider) => {
 
 const contractRecorder = async (blockDataWithTransactions, provider) => {
   const contractTransactions = blockDataWithTransactions.transactions.filter(
-    ({ creates }) => creates
+    ({ creates }) => creates,
   );
   const promisePipeline = [];
   for (
@@ -129,12 +130,10 @@ const contractRecorder = async (blockDataWithTransactions, provider) => {
         : contractTypes.ERC721,
     }));
   const rClient = await getRedisClient();
-  allNftContracts.forEach((contractDetails) =>
-    rClient.set(
-      contractDetails.contractAddress,
-      JSON.stringify(contractDetails)
-    )
-  );
+  allNftContracts.forEach((contractDetails) => rClient.set(
+    contractDetails.contractAddress,
+    JSON.stringify(contractDetails),
+  ));
   await NftContract.insertMany(allNftContracts);
 };
 
