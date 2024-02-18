@@ -30,6 +30,7 @@ In order to setup the project on locally continue to the sections below.
 
 - node v20.11.0
 - yarn
+- <a href="https://redis.io/download/">Redis Server</a>
 
 ### Installation
 
