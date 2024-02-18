@@ -46,6 +46,10 @@ const nftEventSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    blockNumber: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

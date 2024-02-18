@@ -1,9 +1,9 @@
 const Block = require('../../models/block.model');
-const { getMumbaiProvider } = require('../../utils/providers');
+const { getProvider } = require('../../utils/providers');
 
 const newBlockHandler = async (
   blockNumber,
-  provider = getMumbaiProvider(),
+  provider = getProvider(),
   actions = async () => {},
 ) => {
   try {
