@@ -17,3 +17,69 @@ evmProvider2.on('block', async (blockNumber) => {
     },
   );
 });
+
+// [
+//   {
+//     '$match': {
+//       '$or': [
+//         {
+//           'from': '0xcbb94271985be77E11C18141150fEF151514A62f'
+//         }, {
+//           'to': '0xcbb94271985be77E11C18141150fEF151514A62f'
+//         }
+//       ]
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {
+//         'contractAddress': '$contractAddress',
+//         'tokenId': '$tokenId'
+//       },
+//       'balance': {
+//         '$sum': {
+//           '$cond': [
+//             {
+//               '$eq': [
+//                 '$to', '0xcbb94271985be77E11C18141150fEF151514A62f'
+//               ]
+//             }, {
+//               '$toInt': '$amount'
+//             }, {
+//               '$multiply': [
+//                 {
+//                   '$toInt': '$amount'
+//                 }, -1
+//               ]
+//             }
+//           ]
+//         }
+//       }
+//     }
+//   }, {
+//     '$match': {
+//       'balance': {
+//         '$gt': 0
+//       }
+//     }
+//   }, {
+//     '$project': {
+//       '_id': 0,
+//       'contractAddress': '$_id.contractAddress',
+//       'tokenId': '$_id.tokenId',
+//       'balance': '$balance'
+//     }
+//   },
+// {
+//     '$lookup': {
+//       'from': 'nftcontracts',
+//       'localField': 'contractAddress',
+//       'foreignField': 'contractAddress',
+//       'as': 'collection'
+//     }
+//   }, {
+//     '$unwind': {
+//       'path': '$collection',
+//       'preserveNullAndEmptyArrays': true
+//     }
+//   }
+// ]

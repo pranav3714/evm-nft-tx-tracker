@@ -11,12 +11,12 @@ const newBlockHandler = async (
     const blockDataWithTransactions = await provider.getBlockWithTransactions(
       blockNumber,
     );
-    await actions(blockDataWithTransactions);
     newBlock.hash = blockDataWithTransactions.hash;
     newBlock.parentHash = blockDataWithTransactions.parentHash;
     newBlock.timestamp = new Date(blockDataWithTransactions.timestamp * 1e3);
     newBlock.chainId = provider.network.chainId;
-    newBlock.save();
+    await actions(blockDataWithTransactions);
+    await newBlock.save();
   } catch (error) {
     console.log(error);
   }

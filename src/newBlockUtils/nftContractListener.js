@@ -44,21 +44,11 @@ const checkContractType = async (cTxn, provider) => {
           methodName: 'symbol',
           methodParameters: [],
         },
-        // {
-        //   reference: 'totalSupply',
-        //   methodName: 'totalSupply',
-        //   methodParameters: [],
-        // },
         {
           reference: 'baseURI',
           methodName: 'baseURI',
           methodParameters: [],
         },
-        // {
-        //   reference: 'contractURI',
-        //   methodName: 'contractURI',
-        //   methodParameters: [],
-        // },
       ],
     });
     const returnContext = results.results.contract.callsReturnContext;
@@ -76,18 +66,8 @@ const checkContractType = async (cTxn, provider) => {
         .returnValues[0],
       symbol: returnContext.find(({ reference }) => reference === 'symbol')
         .returnValues[0],
-      // supply: returnContext.find(({ reference }) => reference === 'totalSupply')
-      //   .returnValues[0]?.hex
-      //   ? BigNumber.from(
-      //     returnContext.find(({ reference }) => reference === 'totalSupply')
-      //       .returnValues[0]?.hex,
-      //   ).toString()
-      //   : undefined,
       baseURI: returnContext.find(({ reference }) => reference === 'baseURI')
         .returnValues[0],
-      // contractURI: returnContext.find(
-      //   ({ reference }) => reference === 'contractURI',
-      // ).returnValues[0],
       from,
       hash,
       blockNumber,
